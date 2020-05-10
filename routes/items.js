@@ -5,8 +5,9 @@ module.exports = server => {
     //Get Items
 
     server.get('/items', async(req, res, next) => {
-    try{    
-        const items = await Items.find({});
+    try{
+        var mysort = {category: 1}    
+        const items = await Items.find({}).sort(mysort);
         res.send(items);
         next();
     }catch(err){
