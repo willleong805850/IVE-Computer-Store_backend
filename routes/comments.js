@@ -1,6 +1,7 @@
 const errors = require('restify-errors');
 const Comments = require('../model/Comments');
-const Items = mongoose.model("Item");
+const Items = require('../model/Items');
+const User = require('../model/User');
 
 module.exports = server => {
     //Get Comments
@@ -11,6 +12,7 @@ module.exports = server => {
         res.send(comments);
         next();
     }catch(err){
+        
      return next(new errors.InvalidContentError(err));
     }
     });
@@ -27,7 +29,7 @@ module.exports = server => {
         }
         });
 
-    //Add Item
+    //Add Comments
 
     server.post('/comments', async(req, res, next) => {
         //Check for JSON
@@ -61,7 +63,7 @@ module.exports = server => {
         }
 
         try{
-            const item = await Items.findOneAndUpdate({ _id: req.params.id }, req.body);
+            const item = await Comments.findOneAndUpdate({ _id: req.params.id }, req.body);
             res.send(200);
             next();
         }catch{
@@ -73,7 +75,7 @@ module.exports = server => {
 
     server.del('/comments/:id', async(req, res, next) =>{
         try{
-            const items = await Items.findOneAndRemove({_id: req.params.id});
+            const items = await Comments.findOneAndRemove({_id: req.params.id});
             res.send(204);
             next();
         }catch{
