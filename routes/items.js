@@ -6,7 +6,7 @@ module.exports = server => {
 
     server.get('/items', async(req, res, next) => {
     try{
-        var mysort = {category: 1}    
+    	var mysort = {category: 1}  
         const items = await Items.find({}).sort(mysort);
         res.send(items);
         next();
@@ -70,7 +70,7 @@ module.exports = server => {
         }
     });
 
-    //Delete Customer
+    //Delete Item
 
     server.del('/items/:id', async(req, res, next) =>{
         try{
